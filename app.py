@@ -1,4 +1,4 @@
-from chalice import Chalice
+from chalice import Chalice, S3Event
 import json
 app = Chalice(app_name='email-agent')
 
@@ -9,8 +9,8 @@ def handle_s3_event(event):
 def process_s3_event(event):
     # Fetch the email object from S3
     print(event.to_dict())
-    bucket_name = event['s3']['bucket']['name']
-    object_key = event['s3']['object']['key']
+    bucket_name = event.bucket      #event['s3']['bucket']['name']
+    object_key = event.key          #event['s3']['object']['key']
 
     from process_email import parse_email
     incoming = parse_email(bucket_name, object_key)
