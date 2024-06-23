@@ -1,0 +1,7 @@
+.chalice/deployments/
+.chalice/venv/
+.env
+.ipynb_checkpoints/
+.virtual_documents/
+__pycache__/
+venv/
