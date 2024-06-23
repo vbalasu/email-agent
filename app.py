@@ -12,20 +12,26 @@ def process_s3_event(event):
     bucket_name = event.bucket      #event['s3']['bucket']['name']
     object_key = event.key          #event['s3']['object']['key']
 
-    from process_email import parse_email
+    from chalicelib.process_email import parse_email
     incoming = parse_email(bucket_name, object_key)
     prompt = f'{incoming["subject"]}\n{incoming["body"]}'
 
-    from ollama_client import call_ollama
+    from chalicelib.ollama_client import call_ollama
     output = call_ollama(prompt=prompt)
 
-    from process_email import send_email
+    from chalicelib.process_email import send_email
     return send_email(sender='Cloudmatica Agent <agent@cloudmatica.com>', recipient=incoming['sender'], 
            subject='Re: ' + incoming['subject'], body=output)
 
 # For local testing
 if __name__ == "__main__":
-    with open('mock_s3_event.json') as f:
-        mock_event = json.load(f)
-    result = process_s3_event(mock_event['Records'][0])
+    class S3Event:
+        def __init__(self, bucket='my-bucket', key='my-key'):
+            self.bucket = bucket
+            self.key = key
+        def to_dict(self):
+            return {'bucket': self.bucket, 'key': self.key}
+
+    event = S3Event(bucket='cloudmatica', key='agent/14c8tfuj0nbeg6r297496ggqkd1es9nlumuiu481')
+    result = process_s3_event(event)
     print(result)

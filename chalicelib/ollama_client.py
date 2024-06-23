@@ -2,7 +2,7 @@ def test_call_ollama():
     print(call_ollama())
 
 def call_ollama(prompt='Tell me a joke'):
-    from langchain.chat_models.ollama import ChatOllama
+    from langchain_community.chat_models.ollama import ChatOllama
     from langchain_core.output_parsers.string import StrOutputParser
 
     # Get the configuration
