@@ -8,7 +8,7 @@ def handle_s3_event(event):
 
 def process_s3_event(event):
     # Fetch the email object from S3
-    print(event)
+    print(event.to_dict())
     bucket_name = event['s3']['bucket']['name']
     object_key = event['s3']['object']['key']
 
