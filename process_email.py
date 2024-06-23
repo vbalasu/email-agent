@@ -41,3 +41,37 @@ def parse_email(bucket_name: str, object_key: str) -> dict:
         'subject': subject,
         'body': body
     }
+
+def send_email(sender: str, recipient: str, subject: str, body: str) -> dict:
+    """
+    Send an email
+
+    Arguments:
+        sender (str): Email address of the sender
+        recipient (str): Email address of the recipient
+        subject (str): Subject line of the email message
+        body (str): Body of the email message
+
+    Returns:
+        dict containing the response from SES upon sending the message
+    """
+    import boto3
+    ses_client = boto3.client('ses')
+    # Send the response email using SES
+    return ses_client.send_email(
+        Source=sender,
+        Destination={
+            'ToAddresses': [recipient]
+        },
+        Message={
+            'Subject': {
+                'Data': subject,
+                'Charset': 'UTF-8'
+            },
+            'Body': {
+                'Text': {
+                    'Data': body,
+                    'Charset': 'UTF-8'
+                }
+            }
+        })
