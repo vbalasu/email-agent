@@ -8,7 +8,7 @@ def call_ollama(prompt='Tell me a joke'):
     # Get the configuration
     import configparser
     config = configparser.ConfigParser()
-    config.read('settings.conf')
+    config.read('chalicelib/settings.conf')
     base_url = config.get('DEFAULT', 'base_url')
     model = config.get('DEFAULT', 'model')
     # print('base_url', base_url, 'model', model)
