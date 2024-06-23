@@ -1,4 +1,4 @@
-from chalice import Chalice, S3Event
+from chalice import Chalice
 import json
 app = Chalice(app_name='email-agent')
 
