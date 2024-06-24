@@ -6,13 +6,15 @@
 			"Effect": "Allow",
 			"Action": [
 				"s3:GetObject",
+				"ses:SendEmail",
 				"logs:CreateLogStream",
 				"logs:CreateLogGroup",
 				"logs:PutLogEvents"
 			],
 			"Resource": [
+				"arn:*:logs:*:*:*",
 				"arn:aws:s3:::cloudmatica/agent/*",
-				"arn:*:logs:*:*:*"
+				"arn:aws:ses:us-east-1:251566558623:identity/cloudmatica.com"
 			]
 		}
 	]
