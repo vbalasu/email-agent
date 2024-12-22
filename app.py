@@ -24,6 +24,10 @@ def process_s3_event(event):
     return send_email(sender='Cloudmatica Agent <agent@cloudmatica.com>', recipient=incoming['sender'], 
            subject='Re: ' + incoming['subject'], body=output)
 
+@app.route('/')
+def index():
+    return 'email-agent is running. Send an email to agent@cloudmatica.com'
+
 # For local testing
 if __name__ == "__main__":
     class S3Event:
